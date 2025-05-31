@@ -97,6 +97,16 @@ func SendInfo(info any, route string) {
 		infoString = v
 	case error:
 		infoString = v.Error()
+	case map[string]interface{}:
+		var buf bytes.Buffer
+		encoder := json.NewEncoder(&buf)
+		encoder.SetIndent("", "  ")
+		err := encoder.Encode(v)
+		if err != nil {
+			infoString = fmt.Sprintf("%+v", v)
+		} else {
+			infoString = buf.String()
+		}
 	default:
 		var buf bytes.Buffer
 		encoder := json.NewEncoder(&buf)
