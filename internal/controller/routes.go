@@ -6,6 +6,9 @@ import (
 	"backend-mobAppRest/internal/controller/product"
 	"backend-mobAppRest/internal/service"
 	"github.com/gin-gonic/gin"
+	"net/http"
+	"path/filepath"
+	"strings"
 )
 
 func RouteAPI(route *gin.Engine, services *service.Service) {
@@ -20,8 +23,8 @@ func RouteAPI(route *gin.Engine, services *service.Service) {
 	cartRoute.Use(AuthMiddleware())
 
 	cartRoute.GET("/get", cartController.GetCart)
-	cartRoute.POST("/plus/", cartController.Plus)
-	cartRoute.POST("/minus/", cartController.Minus)
+	cartRoute.POST("/plus", cartController.Plus)
+	cartRoute.POST("/minus", cartController.Minus)
 
 	catalogRoute := apiRoute.Group("/catalog")
 	catalogController := product.NewCatalogController(services.ProductService)
@@ -37,4 +40,19 @@ func RouteAPI(route *gin.Engine, services *service.Service) {
 	authRoute.POST("/signin", authController.SignIn)
 	authRoute.POST("/signup", authController.SignUp)
 
+	route.GET("/storage/:filename", func(c *gin.Context) {
+
+		filename := c.Param("filename")
+
+		if strings.Contains(filename, "..") {
+			c.AbortWithStatus(http.StatusBadRequest)
+			return
+		}
+
+		// Полный путь до файла
+		filePath := filepath.Join("storage", filename)
+
+		// Отправляем файл клиенту
+		c.File(filePath)
+	})
 }
