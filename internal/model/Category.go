@@ -9,10 +9,10 @@ type Category struct {
 }
 
 type ViewCategoryList struct {
-	ID       int
-	Name     string
-	ImageUrl string
-	Sort     int
+	ID       int    `json:"id"`
+	Name     string `json:"name"`
+	ImageUrl string `json:"imageUrl"`
+	Sort     int    `json:"sort"`
 }
 
 type ViewCategoryWithProductList struct {
