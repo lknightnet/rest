@@ -10,6 +10,7 @@ RUN apt update && \
 WORKDIR /rest-service
 
 COPY config/config.yaml config/
+COPY storage/ storage
 COPY rest-service /rest-service
 
 EXPOSE 8080
