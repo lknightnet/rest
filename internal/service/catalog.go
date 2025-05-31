@@ -28,7 +28,7 @@ func (c *catalogService) GetCategories() ([]model.ViewCategoryList, error) {
 			ID:       category.ID,
 			Name:     category.Name,
 			Sort:     category.Sort,
-			ImageUrl: category.ImageUrl,
+			ImageUrl: "/storage/" + category.ImageUrl,
 		})
 	}
 
