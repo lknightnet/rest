@@ -2,7 +2,7 @@ app:
   name: "backend-modAppRest"
   version: "0.0.1"
 database:
-  uri: postgres://green:0010@rest-postgres-1:5433/regina
+  uri: postgres://green:0010@rest-postgres-1:5432/regina
 jwt:
   sign_key: "regina"
   access_expiry: 24h
