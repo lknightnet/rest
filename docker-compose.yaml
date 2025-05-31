@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+
+  rest-service:
+    build:
+      context: ./rest-service
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+
+  postgres:
+    image: postgres:alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    #      - ./postgres/schema/create.sql:/docker-entrypoint-initdb.d/create.sql скрипты, которые выполнятся с самого начала. они есть?
+    restart: always
+    env_file:
+      - ./envFiles/postgres.env
+    ports:
+      - "5433:5432"
+
+
+volumes:
+  postgres_data:
+
+networks:
+  net:
+    driver: bridge
