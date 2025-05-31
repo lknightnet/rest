@@ -25,9 +25,10 @@ func (c *catalogService) GetCategories() ([]model.ViewCategoryList, error) {
 
 	for _, category := range categories {
 		catalogs = append(catalogs, model.ViewCategoryList{
-			ID:   category.ID,
-			Name: category.Name,
-			Sort: category.Sort,
+			ID:       category.ID,
+			Name:     category.Name,
+			Sort:     category.Sort,
+			ImageUrl: category.ImageUrl,
 		})
 	}
 
