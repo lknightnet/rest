@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"github.com/gin-gonic/gin"
 	"io"
-	"log"
 	"strings"
 )
 
@@ -34,7 +33,6 @@ func LoggerMiddleware() gin.HandlerFunc {
 			requestInfo["body"] = string(bodyBytes)
 		}
 
-		log.Println(requestInfo)
 		go tg.SendInfo(requestInfo, c.Request.URL.Path)
 
 		c.Next()
