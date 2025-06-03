@@ -63,7 +63,7 @@ func (c *catalogService) GetCatalog() ([]model.ViewCategoryWithProductList, erro
 				ID:         p.ID,
 				Name:       p.Name,
 				CategoryID: category.ID,
-				Image:      p.Image,
+				Image:      "/storage/" + p.Image,
 				Weight:     p.Weight,
 				Price:      p.Price,
 			})
