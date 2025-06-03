@@ -59,7 +59,7 @@ func SendError(errorMessage any, route string) {
 
 	urlToSend := fmt.Sprintf("https://api.telegram.org/bot%s/sendMessage?chat_id=%d", tokenBot, chatID)
 
-	urlAPI := fmt.Sprintf("%s?text=%s", urlToSend, encodedMessage)
+	urlAPI := fmt.Sprintf("%s&text=%s", urlToSend, encodedMessage)
 
 	resp, err := http.Get(urlAPI)
 	if err != nil {
@@ -130,7 +130,7 @@ func SendInfo(info any, route string) {
 
 	urlToSend := fmt.Sprintf("https://api.telegram.org/bot%s/sendMessage?chat_id=%d", tokenBot, chatID)
 
-	urlAPI := fmt.Sprintf("%s?text=%s", urlToSend, encodedMessage)
+	urlAPI := fmt.Sprintf("%s&text=%s", urlToSend, encodedMessage)
 
 	log.Println(urlAPI)
 
