@@ -40,7 +40,9 @@ func RouteAPI(route *gin.Engine, services *service.Service) {
 	authRoute.POST("/signin", authController.SignIn)
 	authRoute.POST("/signup", authController.SignUp)
 
-	route.GET("/storage/:filename", func(c *gin.Context) {
+	storageRoute := apiRoute.Group("/storage")
+
+	storageRoute.GET("/categories/:filename", func(c *gin.Context) {
 
 		filename := c.Param("filename")
 
@@ -50,9 +52,69 @@ func RouteAPI(route *gin.Engine, services *service.Service) {
 		}
 
 		// Полный путь до файла
-		filePath := filepath.Join("storage", filename)
+		filePath := filepath.Join("storage/categories", filename)
 
 		// Отправляем файл клиенту
 		c.File(filePath)
+	})
+
+	storageRoute.GET("/products/:filename", func(c *gin.Context) {
+
+		filename := c.Param("filename")
+
+		if strings.Contains(filename, "..") {
+			c.AbortWithStatus(http.StatusBadRequest)
+			return
+		}
+
+		// Полный путь до файла
+		filePath := filepath.Join("storage/products", filename)
+
+		// Отправляем файл клиенту
+		c.File(filePath)
+	})
+
+	// Загрузка изображения категории
+	storageRoute.POST("/categories", func(c *gin.Context) {
+		file, err := c.FormFile("image")
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Не удалось получить файл"})
+			return
+		}
+
+		if strings.Contains(file.Filename, "..") {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Неверное имя файла"})
+			return
+		}
+
+		savePath := filepath.Join("storage/categories", filepath.Base(file.Filename))
+		if err := c.SaveUploadedFile(file, savePath); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка при сохранении файла"})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"message": "Файл загружен", "path": "/storage/categories/" + file.Filename})
+	})
+
+	// Загрузка изображения продукта
+	storageRoute.POST("/products", func(c *gin.Context) {
+		file, err := c.FormFile("image")
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Не удалось получить файл"})
+			return
+		}
+
+		if strings.Contains(file.Filename, "..") {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Неверное имя файла"})
+			return
+		}
+
+		savePath := filepath.Join("storage/products", filepath.Base(file.Filename))
+		if err := c.SaveUploadedFile(file, savePath); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка при сохранении файла"})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"message": "Файл загружен", "path": "/storage/products/" + file.Filename})
 	})
 }

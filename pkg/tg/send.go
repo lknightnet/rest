@@ -119,6 +119,8 @@ func SendInfo(info any, route string) {
 		}
 	}
 
+	log.Println(infoString)
+
 	infoStr := fmt.Sprintf("Информация\n")
 	infoStr += fmt.Sprintf("Сервис ошибки: %s\n", os.Getenv("app.name"))
 	infoStr += fmt.Sprintf("Маршрут: %s\n", route)

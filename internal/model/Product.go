@@ -5,12 +5,12 @@ type Product struct {
 	CategoryID    string
 	Name          string
 	Image         string
-	Calorie       int
-	Weight        int
+	Calorie       float64 // калории
+	Weight        int     // вес
 	Price         float64
-	Squirrels     int
-	Fats          int
-	Carbohydrates int
+	Squirrels     float64 // белки
+	Fats          float64 // жиры
+	Carbohydrates float64 // углеводы
 	Visibility    bool
 }
 
