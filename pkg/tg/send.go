@@ -51,7 +51,7 @@ func SendError(errorMessage any, route string) {
 	errorStr := fmt.Sprintf("Ошибка\n")
 	errorStr += fmt.Sprintf("Сервис ошибки: %s\n", os.Getenv("app.name"))
 	errorStr += fmt.Sprintf("Маршрут: %s\n", route)
-	errorStr += fmt.Sprintf("Дата: %d:%d:%d\n", location.Year(), location.Month(), location.Day())
+	errorStr += fmt.Sprintf("Дата: %d:%d:%d\n", location.Day(), location.Month(), location.Year())
 	errorStr += fmt.Sprintf("Время: %s\n", location.Format("15:04.05"))
 	errorStr += fmt.Sprintf("Подробности:\n%s", infoString)
 
@@ -122,7 +122,7 @@ func SendInfo(info any, route string) {
 	infoStr := fmt.Sprintf("Информация\n")
 	infoStr += fmt.Sprintf("Сервис ошибки: %s\n", os.Getenv("app.name"))
 	infoStr += fmt.Sprintf("Маршрут: %s\n", route)
-	infoStr += fmt.Sprintf("Дата: %d:%d:%d\n", location.Year(), location.Month(), location.Day())
+	infoStr += fmt.Sprintf("Дата: %d:%d:%d\n", location.Day(), location.Month(), location.Year())
 	infoStr += fmt.Sprintf("Время: %s\n", location.Format("15:04.05"))
 	infoStr += fmt.Sprintf("Подробности: \n%s", infoString)
 
