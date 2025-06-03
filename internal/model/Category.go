@@ -16,9 +16,9 @@ type ViewCategoryList struct {
 }
 
 type ViewCategoryWithProductList struct {
-	ID          int
-	Name        string
-	Sort        int
-	ImageUrl    string
-	ProductList []ViewProductList
+	ID          int               `json:"id"`
+	Name        string            `json:"name"`
+	Sort        int               `json:"sort"`
+	ImageUrl    string            `json:"imageUrl"`
+	ProductList []ViewProductList `json:"product_list"`
 }

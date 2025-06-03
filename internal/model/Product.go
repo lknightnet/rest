@@ -15,12 +15,12 @@ type Product struct {
 }
 
 type ViewProductList struct {
-	ID         int
-	Name       string
-	CategoryID int
-	Image      string
-	Weight     int
-	Price      float64
+	ID         int     `json:"id"`
+	Name       string  `json:"name"`
+	CategoryID int     `json:"category_id"`
+	Image      string  `json:"image"`
+	Weight     int     `json:"weight"`
+	Price      float64 `json:"price"`
 }
 
 type ViewProductCartList struct {

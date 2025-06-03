@@ -132,8 +132,6 @@ func SendInfo(info any, route string) {
 
 	urlAPI := fmt.Sprintf("%s&text=%s", urlToSend, encodedMessage)
 
-	log.Println(urlAPI)
-
 	resp, err := http.Get(urlAPI)
 	if err != nil {
 		log.Println(err)
