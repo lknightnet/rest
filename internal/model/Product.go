@@ -2,7 +2,7 @@ package model
 
 type Product struct {
 	ID            int
-	CategoryID    string
+	CategoryID    int
 	Name          string
 	Image         string
 	Calorie       float64 // калории
