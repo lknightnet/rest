@@ -40,7 +40,7 @@ func RouteAPI(route *gin.Engine, services *service.Service) {
 	authRoute.POST("/signin", authController.SignIn)
 	authRoute.POST("/signup", authController.SignUp)
 
-	storageRoute := apiRoute.Group("/storage")
+	storageRoute := route.Group("/storage")
 
 	storageRoute.GET("/categories/:filename", func(c *gin.Context) {
 
