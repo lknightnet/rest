@@ -72,6 +72,7 @@ func (c *catalogService) GetCatalog() ([]model.ViewCategoryWithProductList, erro
 		catalogs = append(catalogs, model.ViewCategoryWithProductList{
 			ID:          category.ID,
 			Name:        category.Name,
+			ImageUrl:    "/storage/" + category.ImageUrl,
 			Sort:        category.Sort,
 			ProductList: productList,
 		})
@@ -86,6 +87,7 @@ func (c *catalogService) GetProductById(productID int) (*model.Product, error) {
 		slog.Debug("error get product", err)
 		return nil, customServiceError.ErrUnknown
 	}
+	product.Image = "/storage/" + product.Image
 	return product, nil
 }
 
