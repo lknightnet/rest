@@ -5,12 +5,12 @@ type Product struct {
 	CategoryID    int     `json:"category_id"`
 	Name          string  `json:"name"`
 	Image         string  `json:"image_url"`
-	Calorie       float64 `yaml:"calorie"` // калории
-	Weight        int     `yaml:"weight"`  // вес
+	Calorie       float64 `json:"calorie"` // калории
+	Weight        int     `json:"weight"`  // вес
 	Price         float64 `json:"price"`
-	Squirrels     float64 `yaml:"squirrels"`     // белки
-	Fats          float64 `yaml:"fats"`          // жиры
-	Carbohydrates float64 `yaml:"carbohydrates"` // углеводы
+	Squirrels     float64 `json:"squirrels"`     // белки
+	Fats          float64 `json:"fats"`          // жиры
+	Carbohydrates float64 `json:"carbohydrates"` // углеводы
 	Visibility    bool
 }
 
