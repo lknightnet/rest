@@ -23,7 +23,7 @@ func (authController *AuthController) SignUp(c *gin.Context) {
 		return
 	}
 
-	tokens, err := authController.AuthService.SignUp(json.Username, json.Email, json.Password)
+	tokens, err := authController.AuthService.SignUp(json.Username, json.Phone, json.Password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -38,7 +38,7 @@ func (authController *AuthController) SignIn(c *gin.Context) {
 		return
 	}
 
-	tokens, err := authController.AuthService.SignIn(json.Email, json.Password)
+	tokens, err := authController.AuthService.SignIn(json.Phone, json.Password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
