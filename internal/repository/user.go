@@ -52,6 +52,9 @@ func (u *userRepository) GetUserByToken(token string) (*model.User, error) {
 	var accessToken model.AccessToken
 	err := u.DB.DB.Where("token = ?", token).First(&accessToken).Error
 	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, customRepositoryError.ErrUserNotFound
+		}
 		return nil, err
 	}
 
