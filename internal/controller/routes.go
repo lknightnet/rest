@@ -18,7 +18,7 @@ func RouteAPI(route *gin.Engine, services *service.Service) {
 
 	apiRoute := route.Group("/api")
 	apiRoute.Use(LoggerMiddleware())
-	RouteStorage(apiRoute)
+	RouteStorage(route)
 
 	cartRoute := apiRoute.Group("/cart")
 	cartController := cart.NewCartController(services.CartService)
@@ -51,7 +51,7 @@ func RouteAPI(route *gin.Engine, services *service.Service) {
 
 }
 
-func RouteStorage(route *gin.RouterGroup) {
+func RouteStorage(route *gin.Engine) {
 	storageRoute := route.Group("/storage")
 	storageRoute.GET("/categories/:filename", func(c *gin.Context) {
 		filename := c.Param("filename")
