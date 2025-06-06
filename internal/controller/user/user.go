@@ -22,7 +22,7 @@ func (u *UserController) GetUserByAccessToken(c *gin.Context) {
 
 	user, err := u.UserService.GetUserByAccessToken(token.(string))
 	if err != nil {
-		if errors.Is(err, customServiceError.ErrCartsNotFound) {
+		if errors.Is(err, customServiceError.ErrUserNotFound) {
 			c.JSON(http.StatusNotFound, ErrorResponse{Error: err.Error()})
 			return
 		}

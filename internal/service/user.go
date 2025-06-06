@@ -31,7 +31,7 @@ func (u *userService) GetUserByAccessToken(token string) (*model.ViewUser, error
 	user, err := u.UserRepository.GetUserByToken(token)
 	if err != nil {
 		if errors.Is(err, customRepositoryError.ErrUserNotFound) {
-			return nil, customServiceError.ErrUnknown
+			return nil, customServiceError.ErrUserNotFound
 		}
 		go tg.SendError(err.Error(), "/api/user/get")
 		slog.Debug("error get user by access token in database", err, token)
