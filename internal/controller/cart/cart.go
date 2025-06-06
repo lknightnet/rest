@@ -8,15 +8,15 @@ import (
 	"net/http"
 )
 
-type ACartController struct {
+type CartController struct {
 	CartService service.CartService
 }
 
-func NewCartController(cartService service.CartService) *ACartController {
-	return &ACartController{CartService: cartService}
+func NewCartController(cartService service.CartService) *CartController {
+	return &CartController{CartService: cartService}
 }
 
-func (ca *ACartController) GetCart(c *gin.Context) {
+func (ca *CartController) GetCart(c *gin.Context) {
 	token, _ := c.Get("token")
 
 	carts, err := ca.CartService.GetCarts(token.(string))
@@ -30,7 +30,7 @@ func (ca *ACartController) GetCart(c *gin.Context) {
 	c.JSON(http.StatusOK, carts)
 }
 
-func (ca *ACartController) Plus(c *gin.Context) {
+func (ca *CartController) Plus(c *gin.Context) {
 	token, _ := c.Get("token")
 	var json ActionRequest
 
@@ -52,7 +52,7 @@ func (ca *ACartController) Plus(c *gin.Context) {
 	c.JSON(http.StatusOK, carts)
 }
 
-func (ca *ACartController) Minus(c *gin.Context) {
+func (ca *CartController) Minus(c *gin.Context) {
 	token, _ := c.Get("token")
 	var json ActionRequest
 

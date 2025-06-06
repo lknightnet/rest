@@ -4,6 +4,7 @@ import (
 	"backend-mobAppRest/internal/controller/auth"
 	"backend-mobAppRest/internal/controller/cart"
 	"backend-mobAppRest/internal/controller/product"
+	"backend-mobAppRest/internal/controller/user"
 	"backend-mobAppRest/internal/service"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -17,6 +18,7 @@ func RouteAPI(route *gin.Engine, services *service.Service) {
 
 	apiRoute := route.Group("/api")
 	apiRoute.Use(LoggerMiddleware())
+	RouteStorage(apiRoute)
 
 	cartRoute := apiRoute.Group("/cart")
 	cartController := cart.NewCartController(services.CartService)
@@ -40,12 +42,19 @@ func RouteAPI(route *gin.Engine, services *service.Service) {
 	authRoute.POST("/signin", authController.SignIn)
 	authRoute.POST("/signup", authController.SignUp)
 
+	userRoute := apiRoute.Group("/user")
+	userController := user.NewUserController(services.UserService)
+	userRoute.Use(AuthMiddleware())
+
+	userRoute.GET("/get", userController.GetUserByAccessToken)
+	userRoute.POST("/change", userController.ChangeInformation)
+
+}
+
+func RouteStorage(route *gin.RouterGroup) {
 	storageRoute := route.Group("/storage")
-
 	storageRoute.GET("/categories/:filename", func(c *gin.Context) {
-
 		filename := c.Param("filename")
-
 		if strings.Contains(filename, "..") {
 			c.AbortWithStatus(http.StatusBadRequest)
 			return
@@ -57,7 +66,6 @@ func RouteAPI(route *gin.Engine, services *service.Service) {
 		// Отправляем файл клиенту
 		c.File(filePath)
 	})
-
 	storageRoute.GET("/products/:filename", func(c *gin.Context) {
 
 		filename := c.Param("filename")
@@ -95,8 +103,6 @@ func RouteAPI(route *gin.Engine, services *service.Service) {
 
 		c.JSON(http.StatusOK, gin.H{"message": "Файл загружен", "path": "/storage/categories/" + file.Filename})
 	})
-
-	// Загрузка изображения продукта
 	storageRoute.POST("/products", func(c *gin.Context) {
 		file, err := c.FormFile("image")
 		if err != nil {

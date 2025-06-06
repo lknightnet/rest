@@ -20,16 +20,13 @@ type ProductService interface {
 }
 
 type AuthService interface {
-	SignUp(username, email, password string) (*model.Tokens, error)
-	SignIn(email, password string) (*model.Tokens, error)
+	SignUp(username, phone, password string) (*model.Tokens, error)
+	SignIn(phone, password string) (*model.Tokens, error)
 }
 
 type UserService interface {
-	GetUserByAccessToken(token string) (*model.User, error)
-	ChangeUsername(token string, newUsername string) error
-	ChangePhone(token string, newPhone string) error
-	ChangeEmail(token string, newEmail string) error
-	ChangePassword(token string, newPassword string) error
+	GetUserByAccessToken(token string) (*model.ViewUser, error)
+	ChangeInformation(token string, user *model.User) error
 }
 
 type Service struct {
@@ -58,5 +55,6 @@ func NewService(deps *DependenciesService) *Service {
 			deps.AuthSignature, deps.AuthRepository, deps.TokenRepository, deps.UserRepository),
 		ProductService: newCatalogService(deps.CatalogRepository),
 		CartService:    newCartService(deps.CartRepository, deps.CatalogRepository),
+		UserService:    newUserService(deps.UserRepository),
 	}
 }

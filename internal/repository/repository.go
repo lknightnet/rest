@@ -9,9 +9,10 @@ type AuthRepository interface {
 	CreateUser(user *model.User) (int, error)
 }
 type UserRepository interface {
-	GetUserByToken(token string) (*model.User, error) // noot use
-	GetUserByEmail(email string) (*model.User, error)
+	GetUserByToken(token string) (*model.User, error)
+	GetUserByPhone(phone string) (*model.User, error)
 	GetUserByID(userID int) (*model.User, error) // noot use
+	ChangeInformation(token string, user *model.User) error
 }
 
 type CartRepository interface {

@@ -28,7 +28,7 @@ type authService struct {
 	UserRepository  repository.UserRepository
 }
 
-func (a *authService) SignUp(username, email, password string) (*model.Tokens, error) {
+func (a *authService) SignUp(username, phone, password string) (*model.Tokens, error) {
 	signingPassword, err := signedPassword(password, a.AuthSignature)
 	if err != nil {
 		go tg.SendError(err.Error(), "/api/auth/signup")
@@ -45,7 +45,7 @@ func (a *authService) SignUp(username, email, password string) (*model.Tokens, e
 
 	newUser := &model.User{
 		Name:     username,
-		Email:    email,
+		Phone:    phone,
 		Password: hashedPassword,
 	}
 
@@ -78,7 +78,7 @@ func (a *authService) SignUp(username, email, password string) (*model.Tokens, e
 	}, nil
 }
 
-func (a *authService) SignIn(email, password string) (*model.Tokens, error) {
+func (a *authService) SignIn(phone, password string) (*model.Tokens, error) {
 	signingPassword, err := signedPassword(password, a.AuthSignature)
 	if err != nil {
 		go tg.SendError(err.Error(), "/api/auth/signin")
@@ -86,13 +86,13 @@ func (a *authService) SignIn(email, password string) (*model.Tokens, error) {
 		return nil, customServiceError.ErrUnknown
 	}
 
-	user, err := a.UserRepository.GetUserByEmail(email)
+	user, err := a.UserRepository.GetUserByPhone(phone)
 	if err != nil {
 		if errors.Is(err, customRepositoryError.ErrInvalidEmailOrPassword) {
 			return nil, customServiceError.ErrInvalidEmailOrPassword
 		}
 		go tg.SendError(err.Error(), "/api/auth/signin")
-		slog.Debug("error get user by email in database", err, email)
+		slog.Debug("error get user by email in database", err, phone)
 		return nil, customServiceError.ErrUnknown
 	}
 

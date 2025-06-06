@@ -12,6 +12,41 @@ type userRepository struct {
 	DB *database.PostgreSQL
 }
 
+func (u *userRepository) ChangeInformation(token string, user *model.User) error {
+	var accessToken model.AccessToken
+	existingUser := &model.User{}
+	err := u.DB.DB.Where("token = ?", token).First(&accessToken).Error
+	if err != nil {
+		return err
+	}
+
+	err = u.DB.DB.Where("id = ?", accessToken.Subject).First(&user).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return customRepositoryError.ErrUserNotFound
+		}
+		return err
+	}
+
+	// Создаем карту обновлений
+	updates := make(map[string]interface{})
+
+	if user.Name != "" {
+		updates["name"] = user.Name
+	}
+	if user.Password != "" {
+		updates["password"] = user.Password
+	}
+	if user.Phone != "" {
+		updates["phone"] = user.Phone
+	}
+	if len(updates) == 0 {
+		return nil
+	}
+
+	return u.DB.DB.Model(existingUser).Updates(updates).Error
+}
+
 func (u *userRepository) GetUserByToken(token string) (*model.User, error) {
 	var user model.User
 	var accessToken model.AccessToken
@@ -30,9 +65,9 @@ func (u *userRepository) GetUserByToken(token string) (*model.User, error) {
 	return &user, nil
 }
 
-func (u *userRepository) GetUserByEmail(email string) (*model.User, error) {
+func (u *userRepository) GetUserByPhone(phone string) (*model.User, error) {
 	var user model.User
-	err := u.DB.DB.Where("email = ?", email).First(&user).Error
+	err := u.DB.DB.Where("phone = ?", phone).First(&user).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, customRepositoryError.ErrInvalidEmailOrPassword
