@@ -85,6 +85,7 @@ func (c *cartService) Plus(token string, productID int) (*model.ViewCart, error)
 				slog.Debug("error create cart", err, cart)
 				return nil, customServiceError.ErrUnknown
 			}
+			return c.GetCarts(token)
 		}
 		go tg.SendError(err.Error(), "/api/cart/plus")
 		slog.Debug("error plus cart", err, token, productID)
@@ -112,13 +113,14 @@ func (c *cartService) Minus(token string, productID int) (*model.ViewCart, error
 		if err != nil {
 			if errors.Is(err, customRepositoryError.ErrCartNotFound) {
 				go tg.SendError(err.Error(), "/api/cart/minus")
-				slog.Debug("error remove cart", err, token, productID)
+				slog.Debug("cart not found during remove", err, token, productID)
 				return nil, customRepositoryError.ErrCartNotFound
 			}
 			go tg.SendError(err.Error(), "/api/cart/minus")
 			slog.Debug("error remove cart", err, token, productID)
 			return nil, customServiceError.ErrUnknown
 		}
+		return c.GetCarts(token)
 	}
 
 	return c.GetCarts(token)
