@@ -24,9 +24,10 @@ type ViewProductList struct {
 }
 
 type ViewProductCartList struct {
-	ID       int    `json:"id"`
-	Name     string `json:"name"`
-	Image    string `json:"image_url"`
-	Weight   int    `json:"weight"`
-	Quantity int    `json:"quantity"`
+	ID       int     `json:"id"`
+	Name     string  `json:"name"`
+	Image    string  `json:"image_url"`
+	Weight   int     `json:"weight"`
+	Quantity int     `json:"quantity"`
+	Price    float64 `json:"price"`
 }

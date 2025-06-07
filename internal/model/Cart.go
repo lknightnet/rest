@@ -13,6 +13,6 @@ func (c *Cart) GetProductID() int {
 }
 
 type ViewCart struct {
-	TotalPrice float64 `json:"total_price"`
-	Product    []ViewProductCartList
+	TotalPrice float64               `json:"total_price"`
+	Product    []ViewProductCartList `json:"product_list"`
 }

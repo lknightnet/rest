@@ -31,7 +31,7 @@ func (c *cartService) GetCarts(token string) (*model.ViewCart, error) {
 	var viewProductCartList = make([]model.ViewProductCartList, 0)
 
 	for _, cart := range carts {
-		viewCart.TotalPrice = viewCart.TotalPrice + cart.Price
+		viewCart.TotalPrice = viewCart.TotalPrice + float64(cart.Quantity)*cart.Price
 
 		product, err := c.CatalogRepository.GetProductById(cart.ProductID)
 		if err != nil {
@@ -46,6 +46,7 @@ func (c *cartService) GetCarts(token string) (*model.ViewCart, error) {
 			Image:    product.Image,
 			Weight:   product.Weight,
 			Quantity: cart.Quantity,
+			Price:    product.Price,
 		})
 	}
 	viewCart.Product = viewProductCartList
