@@ -43,7 +43,7 @@ func (c *cartService) GetCarts(token string) (*model.ViewCart, error) {
 		viewProductCartList = append(viewProductCartList, model.ViewProductCartList{
 			ID:       cart.ProductID,
 			Name:     product.Name,
-			Image:    product.Image,
+			Image:    "/storage/" + product.Image,
 			Weight:   product.Weight,
 			Quantity: cart.Quantity,
 			Price:    product.Price,
