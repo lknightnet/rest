@@ -55,7 +55,7 @@ func RouteAPI(route *gin.Engine, services *service.Service) {
 	orderRoute.Use(AuthMiddleware())
 	orderRoute.GET("/list", orderController.ListOrder)
 	orderRoute.GET("/get/:id", orderController.OrderByID)
-	orderRoute.POST("/order/create", orderController.Order)
+	orderRoute.POST("/create", orderController.Order)
 }
 
 func RouteStorage(route *gin.Engine) {
