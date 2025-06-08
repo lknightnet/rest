@@ -7,6 +7,7 @@ import (
 	"backend-mobAppRest/internal/service/customServiceError"
 	"backend-mobAppRest/pkg/tg"
 	"errors"
+	"log"
 	"log/slog"
 )
 
@@ -124,6 +125,8 @@ func (o *orderService) Order(token string, instrumentationQuantity int, isDelive
 	}
 
 	order.TotalPrice = totalPrice
+
+	log.Println(order)
 
 	id, err := o.OrderRepository.CreateOrder(order)
 	if err != nil {

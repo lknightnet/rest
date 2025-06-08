@@ -2,9 +2,7 @@ package controller
 
 import (
 	"backend-mobAppRest/pkg/tg"
-	"bytes"
 	"github.com/gin-gonic/gin"
-	"io"
 	"strings"
 )
 
@@ -25,13 +23,13 @@ func LoggerMiddleware() gin.HandlerFunc {
 		requestInfo["client_ip"] = c.ClientIP()
 
 		// Сохраняем Body (осторожно: body можно читать только один раз!)
-		var bodyBytes []byte
-		if c.Request.Body != nil {
-			bodyBytes, _ = io.ReadAll(c.Request.Body)
-			c.Request.Body = io.NopCloser(bytes.NewBuffer(bodyBytes)) // Восстановим Body, чтобы дальше работало
-
-			requestInfo["body"] = string(bodyBytes)
-		}
+		//var bodyBytes []byte
+		//if c.Request.Body != nil {
+		//	bodyBytes, _ = io.ReadAll(c.Request.Body)
+		//	c.Request.Body = io.NopCloser(bytes.NewBuffer(bodyBytes)) // Восстановим Body, чтобы дальше работало
+		//
+		//	requestInfo["body"] = string(bodyBytes)
+		//}
 
 		go tg.SendInfo(requestInfo, c.Request.URL.Path)
 
