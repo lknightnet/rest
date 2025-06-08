@@ -6,6 +6,12 @@ import (
 	"time"
 )
 
+type OrderService interface {
+	Order(token string, instrumentationQuantity int, isDelivery bool, paymentMethod bool, City string, Bonuses int, Comment string) (int, error)
+	ListOrder(token string) (model.ViewOrderList, error)
+	OrderByID(token string, orderId int) (model.ViewOrdersByID, error)
+}
+
 type CartService interface {
 	GetCarts(token string) (*model.ViewCart, error)
 	Plus(token string, productID int) (*model.ViewCart, error)
@@ -34,6 +40,7 @@ type Service struct {
 	ProductService ProductService
 	AuthService    AuthService
 	UserService    UserService
+	OrderService   OrderService
 }
 
 type DependenciesService struct {
@@ -47,6 +54,7 @@ type DependenciesService struct {
 	UserRepository    repository.UserRepository
 	CatalogRepository repository.CatalogRepository
 	CartRepository    repository.CartRepository
+	OrderRepository   repository.OrderRepository
 }
 
 func NewService(deps *DependenciesService) *Service {
@@ -56,5 +64,6 @@ func NewService(deps *DependenciesService) *Service {
 		ProductService: newCatalogService(deps.CatalogRepository),
 		CartService:    newCartService(deps.CartRepository, deps.CatalogRepository),
 		UserService:    newUserService(deps.UserRepository),
+		OrderService:   newOrderService(deps.CartRepository, deps.UserRepository, deps.OrderRepository, deps.CatalogRepository),
 	}
 }

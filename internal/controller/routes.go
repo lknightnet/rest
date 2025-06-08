@@ -3,6 +3,7 @@ package controller
 import (
 	"backend-mobAppRest/internal/controller/auth"
 	"backend-mobAppRest/internal/controller/cart"
+	"backend-mobAppRest/internal/controller/order"
 	"backend-mobAppRest/internal/controller/product"
 	"backend-mobAppRest/internal/controller/user"
 	"backend-mobAppRest/internal/service"
@@ -49,6 +50,12 @@ func RouteAPI(route *gin.Engine, services *service.Service) {
 	userRoute.GET("/get", userController.GetUserByAccessToken)
 	userRoute.POST("/change", userController.ChangeInformation)
 
+	orderRoute := apiRoute.Group("/order")
+	orderController := order.NewOrderController(services.OrderService)
+	orderRoute.Use(AuthMiddleware())
+	orderRoute.GET("/list", orderController.ListOrder)
+	orderRoute.GET("/get/:id", orderController.OrderByID)
+	orderRoute.POST("/order/create", orderController.Order)
 }
 
 func RouteStorage(route *gin.Engine) {

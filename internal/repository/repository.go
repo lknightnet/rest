@@ -5,6 +5,14 @@ import (
 	"backend-mobAppRest/pkg/database"
 )
 
+type OrderRepository interface {
+	CreateOrder(order *model.Order) (int, error)
+	CreateOrderProductList(orderProductList *model.OrderProductList) error
+	GetListOrders(userID int) ([]model.Order, error)
+	GetOrderById(orderId int, userId int) (*model.Order, error)
+	GetOrderProductListById(orderId int) ([]model.OrderProductList, error)
+}
+
 type AuthRepository interface {
 	CreateUser(user *model.User) (int, error)
 }
@@ -42,6 +50,7 @@ type Repository struct {
 	TokenRepository   TokenRepository
 	CatalogRepository CatalogRepository
 	CartRepository    CartRepository
+	OrderRepository   OrderRepository
 }
 
 func NewRepositories(db *database.PostgreSQL) *Repository {
@@ -51,5 +60,6 @@ func NewRepositories(db *database.PostgreSQL) *Repository {
 		UserRepository:    newUserRepository(db),
 		CatalogRepository: newCatalogRepository(db),
 		CartRepository:    newCartRepository(db),
+		OrderRepository:   newOrderRepository(db),
 	}
 }
