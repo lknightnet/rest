@@ -104,7 +104,7 @@ func (o *orderService) Order(token string, instrumentationQuantity int, isDelive
 	}
 
 	order.UserID = user.ID
-	order.Address = *user.Address
+	order.Address = user.Address
 	order.UserPhone = user.Phone
 
 	carts, err := o.CartRepository.GetCartsByAccessToken(token)

@@ -5,7 +5,7 @@ type Order struct {
 	TotalPrice              float64
 	InstrumentationQuantity int
 	UserID                  int
-	Address                 string
+	Address                 *string
 	UserPhone               string
 	City                    string
 	Status                  string
@@ -19,7 +19,7 @@ type ViewOrderByID struct {
 	ID                      int     `json:"id"`
 	TotalPrice              float64 `json:"total_price"`
 	InstrumentationQuantity int     `json:"instrumentation_quantity"`
-	Address                 string  `json:"address"`
+	Address                 *string `json:"address"`
 	UserPhone               string  `json:"user_phone"`
 	City                    string  `json:"city"`
 	Status                  string  `json:"status"`
