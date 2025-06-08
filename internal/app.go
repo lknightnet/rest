@@ -18,7 +18,7 @@ import (
 func Run(cfg *config.Config) {
 	connection, err := database.NewConnection(cfg.Database.URI, 0, 5, &model.User{}, &model.Tokens{},
 		&model.Product{}, &model.Cart{}, &model.AccessToken{}, &model.RefreshToken{}, &model.Category{}, &model.UserAddress{},
-		&model.City{})
+		&model.City{}, &model.Order{}, &model.OrderProductList{})
 	if err != nil {
 		panic(err)
 	}
