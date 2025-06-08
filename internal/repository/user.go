@@ -40,7 +40,7 @@ func (u *userRepository) ChangeInformation(token string, user *model.User) error
 	if user.Phone != "" {
 		updates["phone"] = user.Phone
 	}
-	if user.Address != "" {
+	if *user.Address != "" {
 		updates["address"] = user.Address
 	}
 	if len(updates) == 0 {

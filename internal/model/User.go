@@ -5,8 +5,8 @@ type User struct {
 	Name     string `json:"name"`
 	Phone    string `json:"phone"`
 	Password string
-	Bonuses  int    `json:"bonuses"`
-	Address  string `json:"address"`
+	Bonuses  int     `json:"bonuses"`
+	Address  *string `json:"address"`
 }
 
 type ViewUser struct {

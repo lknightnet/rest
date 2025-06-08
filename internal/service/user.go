@@ -42,7 +42,7 @@ func (u *userService) GetUserByAccessToken(token string) (*model.ViewUser, error
 		Name:    user.Name,
 		Phone:   user.Phone,
 		Bonuses: user.Bonuses,
-		Address: user.Address,
+		Address: *user.Address,
 	}
 
 	return viewUser, nil

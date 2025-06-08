@@ -44,7 +44,7 @@ func (u *UserController) ChangeInformation(c *gin.Context) {
 		Name:     json.Name,
 		Phone:    json.Phone,
 		Password: json.Password,
-		Address:  json.Address,
+		Address:  &json.Address,
 	})
 	if err != nil {
 		if errors.Is(err, customServiceError.ErrCartsNotFound) {
