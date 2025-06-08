@@ -20,7 +20,7 @@ func (u *userRepository) ChangeInformation(token string, user *model.User) error
 		return err
 	}
 
-	err = u.DB.DB.Where("id = ?", accessToken.Subject).First(&user).Error
+	err = u.DB.DB.Where("id = ?", accessToken.Subject).First(&existingUser).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return customRepositoryError.ErrUserNotFound
