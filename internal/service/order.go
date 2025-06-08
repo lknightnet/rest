@@ -82,7 +82,7 @@ func (o *orderService) OrderByID(token string, orderId int) (model.ViewOrdersByI
 
 }
 
-func (o *orderService) Order(token string, instrumentationQuantity int, isDelivery bool, paymentMethod bool, City string, Bonuses int, Comment string) (int, error) {
+func (o *orderService) Order(token string, instrumentationQuantity int, isDelivery bool, paymentMethod string, City string, Bonuses int, Comment string) (int, error) {
 	order := &model.Order{
 		InstrumentationQuantity: instrumentationQuantity,
 		City:                    City,

@@ -10,7 +10,7 @@ type Order struct {
 	City                    string
 	Status                  string
 	IsDelivery              bool
-	PaymentMethod           bool
+	PaymentMethod           string
 	Bonuses                 int
 	Comment                 string
 }
@@ -24,7 +24,7 @@ type ViewOrderByID struct {
 	City                    string  `json:"city"`
 	Status                  string  `json:"status"`
 	IsDelivery              bool    `json:"is_delivery"`
-	PaymentMethod           bool    `json:"payment_method"`
+	PaymentMethod           string  `json:"payment_method"`
 	Bonuses                 int     `json:"bonuses"`
 	Comment                 string  `json:"comment"`
 }
