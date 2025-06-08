@@ -35,6 +35,7 @@ func Run(cfg *config.Config) {
 		UserRepository:    repositories.UserRepository,
 		CatalogRepository: repositories.CatalogRepository,
 		CartRepository:    repositories.CartRepository,
+		OrderRepository:   repositories.OrderRepository,
 	}
 
 	services := service.NewService(deps)
