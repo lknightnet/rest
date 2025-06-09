@@ -159,6 +159,8 @@ func (o *orderService) ListOrder(token string) (model.ViewOrderList, error) {
 		return nil, customServiceError.ErrUnknown
 	}
 
+	log.Println(user.ID)
+
 	orders, err := o.OrderRepository.GetListOrders(user.ID)
 	if err != nil {
 		go tg.SendError(err.Error(), "/api/order/list")
@@ -166,8 +168,11 @@ func (o *orderService) ListOrder(token string) (model.ViewOrderList, error) {
 		return nil, customServiceError.ErrUnknown
 	}
 
+	log.Println(orders)
+
 	viewOrderList := model.ViewOrderList{}
 	for _, order := range orders {
+		log.Println(order)
 		viewOrderList = append(viewOrderList, model.ViewOrder{
 			ID:     order.ID,
 			Status: order.Status,
