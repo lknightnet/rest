@@ -41,13 +41,6 @@ func (o *OrderController) Order(c *gin.Context) {
 func (o *OrderController) ListOrder(c *gin.Context) {
 	token, _ := c.Get("token")
 
-	var json OrderRequest
-
-	if err := c.ShouldBindJSON(&json); err != nil {
-		c.JSON(http.StatusBadRequest, ErrorResponse{Error: err.Error()})
-		return
-	}
-
 	orderList, err := o.OrderService.ListOrder(token.(string))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, ErrorResponse{Error: err.Error()})
