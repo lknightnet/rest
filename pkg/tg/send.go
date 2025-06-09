@@ -49,7 +49,7 @@ func SendError(errorMessage any, route string) {
 	}
 
 	errorStr := fmt.Sprintf("Ошибка\n")
-	errorStr += fmt.Sprintf("Сервис ошибки: %s\n", os.Getenv("app.name"))
+	errorStr += fmt.Sprintf("Сервис информации: %s\n", os.Getenv("app.name"))
 	errorStr += fmt.Sprintf("Маршрут: %s\n", route)
 	errorStr += fmt.Sprintf("Дата: %d:%d:%d\n", location.Day(), location.Month(), location.Year())
 	errorStr += fmt.Sprintf("Время: %s\n", location.Format("15:04.05"))
