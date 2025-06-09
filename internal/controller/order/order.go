@@ -54,15 +54,9 @@ func (o *OrderController) ListOrder(c *gin.Context) {
 
 func (o *OrderController) OrderByID(c *gin.Context) {
 	token, _ := c.Get("token")
-	var json OrderRequest
 
 	orderID := c.Param("id")
 	orderIDInt, err := strconv.Atoi(orderID)
-
-	if err := c.ShouldBindJSON(&json); err != nil {
-		c.JSON(http.StatusBadRequest, ErrorResponse{Error: err.Error()})
-		return
-	}
 
 	order, err := o.OrderService.OrderByID(token.(string), orderIDInt)
 	if err != nil {
