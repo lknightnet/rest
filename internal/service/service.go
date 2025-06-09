@@ -9,7 +9,7 @@ import (
 type OrderService interface {
 	Order(token string, instrumentationQuantity int, isDelivery bool, paymentMethod string, City string, Bonuses int, Comment string) (int, error)
 	ListOrder(token string) (model.ViewOrderList, error)
-	OrderByID(token string, orderId int) (model.ViewOrdersByID, error)
+	OrderByID(token string, orderId int) (*model.ViewOrderByIDList, error)
 }
 
 type CartService interface {

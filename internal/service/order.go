@@ -18,7 +18,7 @@ type orderService struct {
 	CatalogRepository repository.CatalogRepository
 }
 
-func (o *orderService) OrderByID(token string, orderId int) (model.ViewOrdersByID, error) {
+func (o *orderService) OrderByID(token string, orderId int) (*model.ViewOrderByIDList, error) {
 	user, err := o.UserRepository.GetUserByToken(token)
 	if err != nil {
 		if errors.Is(err, customRepositoryError.ErrUserNotFound) {
@@ -43,7 +43,7 @@ func (o *orderService) OrderByID(token string, orderId int) (model.ViewOrdersByI
 		return nil, customServiceError.ErrUnknown
 	}
 
-	viewOrderList := model.ViewOrdersByID{}
+	//viewOrderList := model.ViewOrdersByID{}
 	orderProducts := []model.ViewOrderProductList{}
 
 	for _, product := range orderProductList {
@@ -62,7 +62,7 @@ func (o *orderService) OrderByID(token string, orderId int) (model.ViewOrdersByI
 		})
 	}
 
-	viewOrderList = append(viewOrderList, model.ViewOrderByIDList{
+	list := &model.ViewOrderByIDList{
 		OrderInfo: model.ViewOrderByID{
 			ID:                      order.ID,
 			TotalPrice:              order.TotalPrice,
@@ -77,10 +77,9 @@ func (o *orderService) OrderByID(token string, orderId int) (model.ViewOrdersByI
 			Comment:                 order.Comment,
 		},
 		OrderProductList: orderProducts,
-	})
+	}
 
-	return viewOrderList, nil
-
+	return list, nil
 }
 
 func (o *orderService) Order(token string, instrumentationQuantity int, isDelivery bool, paymentMethod string, City string, Bonuses int, Comment string) (int, error) {
